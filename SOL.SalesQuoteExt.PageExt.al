@@ -10,7 +10,7 @@ pageextension 50120 "Sales Quote Ext" extends "Sales Quote"
                 Editable = false;
                 Caption = 'Won/Lost Quote Status';
                 ToolTip = 'Caption';
-            }          
+            }
 
             field(WonLostReasonCode; Rec."Won/Lost Reason Code")
             {
@@ -18,7 +18,7 @@ pageextension 50120 "Sales Quote Ext" extends "Sales Quote"
                 Editable = false;
                 Caption = 'Won/Lost Quote Status';
                 ToolTip = 'Caption';
-            }       
+            }
 
             field(WonLostReasonDesc; Rec."Won/Lost Reason Desc")
             {
@@ -26,7 +26,7 @@ pageextension 50120 "Sales Quote Ext" extends "Sales Quote"
                 Editable = false;
                 Caption = 'Won/Lost Quote Status';
                 ToolTip = 'Caption';
-            }       
+            }
 
             field(WWonLostRemarks; Rec."Won/Lost Remarks")
             {
@@ -34,7 +34,7 @@ pageextension 50120 "Sales Quote Ext" extends "Sales Quote"
                 Editable = false;
                 Caption = 'Won/Lost Quote Status';
                 ToolTip = 'Caption';
-            }       
+            }
 
             field(WonLostDate; Rec."Won/Lost Date")
             {
@@ -42,8 +42,34 @@ pageextension 50120 "Sales Quote Ext" extends "Sales Quote"
                 Editable = false;
                 Caption = 'Won/Lost Quote Status';
                 ToolTip = 'Caption';
-            }       
-            
+            }
+
+        }
+
+    }
+
+    actions
+    {
+        addfirst(Create)
+        {
+            action(CloseQuote)
+            {
+                ApplicationArea = All;
+                Caption = 'Close Quote';
+                ToolTip = 'Close Quote';
+                Image = Close;
+
+                trigger OnAction()
+                var
+                    QuoteStatusMgmt: Codeunit "Quote Status Mgmt";
+                    CloseQuotePage: Page "Close Quote";
+                begin
+                    clear(CloseQuotePage);
+                    If CloseQuotePage.RunModal() = Action::OK then
+                        QuoteStatusMgmt.CloseQuote(Rec);
+
+                end;
+            }
         }
     }
 }

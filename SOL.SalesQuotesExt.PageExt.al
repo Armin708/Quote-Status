@@ -46,5 +46,30 @@ pageextension 50122 "Sales Quotes Ext" extends "Sales Quotes"
 
         }
     }
+
+    actions
+    {
+        addfirst(Create)
+        {
+            action(CloseQuote)
+            {
+                ApplicationArea = All;
+                Caption = 'Close Quote';
+                ToolTip = 'Close Quote';
+                Image = Close;
+
+                trigger OnAction()
+                var
+                    QuoteStatusMgmt: Codeunit "Quote Status Mgmt";
+                    CloseQuotePage: Page "Close Quote";
+                begin
+                    clear(CloseQuotePage);
+                    If CloseQuotePage.RunModal() = Action::OK then
+                        QuoteStatusMgmt.CloseQuote(Rec);
+
+                end;
+            }
+        }
+    }
 }
 
