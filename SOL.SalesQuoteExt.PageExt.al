@@ -61,7 +61,7 @@ pageextension 50120 "Sales Quote Ext" extends "Sales Quote"
 
                 trigger OnAction()
                 var
-                    QuoteStatusMgmt: Codeunit "Quote Status Mgmt";
+                    QuoteStatusMgmt: Codeunit "Quote Status Mgmt";    
                     CloseQuotePage: Page "Close Quote";
                 begin
                     clear(CloseQuotePage);
@@ -71,6 +71,6 @@ pageextension 50120 "Sales Quote Ext" extends "Sales Quote"
                 end;
             }
         }
-    }
+    } 
 }
 

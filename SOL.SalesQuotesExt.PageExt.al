@@ -64,6 +64,7 @@ pageextension 50122 "Sales Quotes Ext" extends "Sales Quotes"
                     CloseQuotePage: Page "Close Quote";
                 begin
                     clear(CloseQuotePage);
+                    CloseQuotePage.SetTableView(Rec);
                     If CloseQuotePage.RunModal() = Action::OK then
                         QuoteStatusMgmt.CloseQuote(Rec);
 
