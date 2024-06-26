@@ -1,3 +1,5 @@
 .vscode/*.*
 *.app
 *.alcache
+*.gitignore
+*app.json
