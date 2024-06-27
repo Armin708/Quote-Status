@@ -32,6 +32,23 @@ codeunit 50120 "SOL Quote Status Mgmt"
 
     end;
 
+    procedure GetSalesPersonForUser(): Code[20]
+    var
+        SalesPerson: Record "Salesperson/Purchaser";
+        User: Record User;
+    begin
+
+        clear(User);
+        if not User.Get(UserSecurityId()) then
+            exit;
+
+        Clear(SalesPerson);
+        SalesPerson.SetRange("E-Mail", User."Contact Email");
+        if SalesPerson.FindFirst() then
+            exit(SalesPerson.Code);
+
+    end;
+
     [EventSubscriber(ObjectType::Page, Page::"Sales Quote", 'OnBeforeActionEvent', 'Archive Document', false, false)]
     local procedure OnBeforeArchiveQuote(var Rec: Record "Sales Header")
     begin
@@ -64,5 +81,7 @@ codeunit 50120 "SOL Quote Status Mgmt"
         SalesHeaderArchive.Validate("Won/Lost Remarks", SalesHeader."Won/Lost Remarks");
 
     end;
+
+
 
 }
