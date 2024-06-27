@@ -49,6 +49,24 @@ codeunit 50120 "SOL Quote Status Mgmt"
 
     end;
 
+    procedure OpenQuotes(Notif: Notification)
+    var
+        SalesHeader: Record "Sales Header";
+        WonLostStatusInteger: Integer;
+
+    begin
+
+        Evaluate(WonLostStatusInteger, Notif.GetData('WonLostStatus'));
+
+        clear(SalesHeader);
+        SalesHeader.SetRange("Document Type", SalesHeader."Document Type"::Quote);
+        SalesHeader.SetRange("Salesperson Code", Notif.GetData('SalespersonCode'));
+        SalesHeader.SetRange("Won/Lost Quote Status", "SOL Won/Lost Quote Status".FromInteger(WonLostStatusInteger));
+        if SalesHeader.FindFirst() then
+            Page.Run(Page::"Sales Quotes", SalesHeader);
+
+    end;
+
     [EventSubscriber(ObjectType::Page, Page::"Sales Quote", 'OnBeforeActionEvent', 'Archive Document', false, false)]
     local procedure OnBeforeArchiveQuote(var Rec: Record "Sales Header")
     begin
@@ -94,6 +112,7 @@ codeunit 50120 "SOL Quote Status Mgmt"
         WonCounter: Integer;
         WonMsg: Label 'You won %1 quote(s) during the last 5 days';
         LostMsg: Label 'You lost %1 quote(s) during the last 5 days';
+        ShowQuotes: Label 'Show %1 quotes';
 
 
     begin
@@ -121,6 +140,9 @@ codeunit 50120 "SOL Quote Status Mgmt"
         if WonCounter > 0 then begin
 
             MyNotificationWon.Message(StrSubstNo(WonMsg, WonCounter));
+            MyNotificationWon.SetData('SalespersonCode', SalesPersonCode);
+            MyNotificationWon.SetData('WonlostStatus', Format(SalesHeader."Won/Lost Quote Status"::Won.AsInteger()));
+            MyNotificationWon.AddAction(StrSubstNo(ShowQuotes, SalesHeader."Won/Lost Quote Status"::Won), Codeunit::"SOL Quote Status Mgmt", 'OpenQuotes');
             MyNotificationWon.Send();
 
         end;
@@ -129,11 +151,16 @@ codeunit 50120 "SOL Quote Status Mgmt"
         if LostCounter > 0 then begin
 
             MyNotificationLost.Message(StrSubstNo(LostMsg, LostCounter));
+            MyNotificationWon.SetData('SalespersonCode', SalesPersonCode);
+            MyNotificationWon.SetData('WonlostStatus', Format(SalesHeader."Won/Lost Quote Status"::Won.AsInteger()));
+            MyNotificationWon.AddAction(StrSubstNo(ShowQuotes, SalesHeader."Won/Lost Quote Status"::Lost), Codeunit::"SOL Quote Status Mgmt", 'OpenQuotes');
             MyNotificationLost.Send();
 
         end;
 
     end;
+
+
 
 
 
