@@ -82,6 +82,59 @@ codeunit 50120 "SOL Quote Status Mgmt"
 
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Conf./Personalization Mgt.", 'OnRoleCenterOpen', '', false, false)]
+    local procedure OnRoleCenterOpen()
+    var
+        SalesHeader: Record "Sales Header";
+        SalesArchive: Record "Sales Header Archive";
+        MyNotificationWon: Notification;
+        MyNotificationLost: Notification;
+        SalesPersonCode: Code[20];
+        LostCounter: Integer;
+        WonCounter: Integer;
+        WonMsg: Label 'You won %1 quote(s) during the last 5 days';
+        LostMsg: Label 'You lost %1 quote(s) during the last 5 days';
+
+
+    begin
+
+        SalesPersonCode := GetSalesPersonForUser();
+
+        if SalesPersonCode = '' then
+            exit;
+
+        clear(SalesHeader);
+        SalesHeader.SetRange("Won/Lost Date", CreateDateTime(Today - 5, 0T), CurrentDateTime);
+        SalesHeader.SetRange("Salesperson Code", SalesPersonCode);
+        SalesHeader.SetRange("Won/Lost Quote Status", SalesHeader."Won/Lost Quote Status"::Won);
+
+        clear(SalesArchive);
+        SalesArchive.SetRange("Won/Lost Date", CreateDateTime(Today - 5, 0T), CurrentDateTime);
+        SalesArchive.SetRange("Salesperson Code", SalesPersonCode);
+        SalesArchive.SetRange("Won/Lost Quote Status", SalesArchive."Won/Lost Quote Status"::Won);
+        WonCounter := SalesHeader.Count + SalesArchive.Count;
+
+        SalesHeader.SetRange("Won/Lost Quote Status", SalesHeader."Won/Lost Quote Status"::Lost);
+        SalesArchive.SetRange("Won/Lost Quote Status", SalesArchive."Won/Lost Quote Status"::Lost);
+        LostCounter := SalesHeader.Count + SalesArchive.Count;
+
+        if WonCounter > 0 then begin
+
+            MyNotificationWon.Message(StrSubstNo(WonMsg, WonCounter));
+            MyNotificationWon.Send();
+
+        end;
+
+
+        if LostCounter > 0 then begin
+
+            MyNotificationLost.Message(StrSubstNo(LostMsg, LostCounter));
+            MyNotificationLost.Send();
+
+        end;
+
+    end;
+
 
 
 }
