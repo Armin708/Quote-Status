@@ -1,7 +1,7 @@
 page 50121 "SOL Show Quotes"
 {
     ApplicationArea = All;
-    Caption = 'SOLShowQuotes';
+    Caption = 'Show Won/Lost Quotes';
     PageType = ListPart;
     SourceTable = "Sales Header";
     Editable = false;

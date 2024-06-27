@@ -22,8 +22,8 @@ tableextension 50125 "SOL Sales Header Ext" extends "Sales Header"
         {
             Caption = 'Won/Lost Reason Code';
             DataClassification = ToBeClassified;
-            TableRelation = if ("Won/Lost Reason Code" = const('Won')) "Close Opportunity Code" where(Type = const("Won"))
-            else if ("Won/Lost Reason Code" = const('Lost')) "Close Opportunity Code" where(Type = const("Lost"));
+            TableRelation = if ("Won/Lost Quote Status" = const(Won)) "Close Opportunity Code" where(Type = const("Won"))
+            else if ("Won/Lost Quote Status" = const(Lost)) "Close Opportunity Code" where(Type = const("Lost"));
             ValidateTableRelation = true;
             trigger OnValidate()
             begin

@@ -8,6 +8,7 @@ pageextension 50124 "SOL Business Manager RC Ext" extends "Business Manager Role
             {
                 ApplicationArea = Basic, Suite;
                 SubPageView = where("Won/Lost Quote Status" = const("Won"));
+                Caption = 'Show Won Quotes';
             }
         }
 
@@ -17,6 +18,7 @@ pageextension 50124 "SOL Business Manager RC Ext" extends "Business Manager Role
             {
                 ApplicationArea = Basic, Suite;
                 SubPageView = where("Won/Lost Quote Status" = const("Lost"));
+                Caption = 'Show Lost Quotes';
             }
         }
     }

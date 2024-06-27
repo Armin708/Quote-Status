@@ -56,7 +56,7 @@ codeunit 50120 "SOL Quote Status Mgmt"
 
     begin
 
-        Evaluate(WonLostStatusInteger, Notif.GetData('WonLostStatus'));
+        Evaluate(WonLostStatusInteger, Notif.GetData('WonlostStatus'));
 
         clear(SalesHeader);
         SalesHeader.SetRange("Document Type", SalesHeader."Document Type"::Quote);
@@ -95,7 +95,6 @@ codeunit 50120 "SOL Quote Status Mgmt"
         SalesHeaderArchive.Validate("Won/Lost Date", SalesHeader."Won/Lost Date");
         SalesHeaderArchive.Validate("Won/Lost Quote Status", SalesHeader."Won/Lost Quote Status");
         SalesHeaderArchive.Validate("Won/Lost Reason Code", SalesHeader."Won/Lost Reason Code");
-        SalesHeaderArchive.Validate("Won/Lost Reason Desc", SalesHeader."Won/Lost Reason Desc");
         SalesHeaderArchive.Validate("Won/Lost Remarks", SalesHeader."Won/Lost Remarks");
 
     end;
@@ -104,7 +103,6 @@ codeunit 50120 "SOL Quote Status Mgmt"
     local procedure OnRoleCenterOpen()
     var
         SalesHeader: Record "Sales Header";
-        SalesArchive: Record "Sales Header Archive";
         MyNotificationWon: Notification;
         MyNotificationLost: Notification;
         SalesPersonCode: Code[20];
@@ -126,16 +124,10 @@ codeunit 50120 "SOL Quote Status Mgmt"
         SalesHeader.SetRange("Won/Lost Date", CreateDateTime(Today - 5, 0T), CurrentDateTime);
         SalesHeader.SetRange("Salesperson Code", SalesPersonCode);
         SalesHeader.SetRange("Won/Lost Quote Status", SalesHeader."Won/Lost Quote Status"::Won);
-
-        clear(SalesArchive);
-        SalesArchive.SetRange("Won/Lost Date", CreateDateTime(Today - 5, 0T), CurrentDateTime);
-        SalesArchive.SetRange("Salesperson Code", SalesPersonCode);
-        SalesArchive.SetRange("Won/Lost Quote Status", SalesArchive."Won/Lost Quote Status"::Won);
-        WonCounter := SalesHeader.Count + SalesArchive.Count;
+        WonCounter := SalesHeader.Count;
 
         SalesHeader.SetRange("Won/Lost Quote Status", SalesHeader."Won/Lost Quote Status"::Lost);
-        SalesArchive.SetRange("Won/Lost Quote Status", SalesArchive."Won/Lost Quote Status"::Lost);
-        LostCounter := SalesHeader.Count + SalesArchive.Count;
+        LostCounter := SalesHeader.Count;
 
         if WonCounter > 0 then begin
 
@@ -152,7 +144,7 @@ codeunit 50120 "SOL Quote Status Mgmt"
 
             MyNotificationLost.Message(StrSubstNo(LostMsg, LostCounter));
             MyNotificationWon.SetData('SalespersonCode', SalesPersonCode);
-            MyNotificationWon.SetData('WonlostStatus', Format(SalesHeader."Won/Lost Quote Status"::Won.AsInteger()));
+            MyNotificationWon.SetData('WonlostStatus', Format(SalesHeader."Won/Lost Quote Status"::Lost.AsInteger()));
             MyNotificationWon.AddAction(StrSubstNo(ShowQuotes, SalesHeader."Won/Lost Quote Status"::Lost), Codeunit::"SOL Quote Status Mgmt", 'OpenQuotes');
             MyNotificationLost.Send();
 
