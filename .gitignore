@@ -1,5 +1,3 @@
-.vscode/*.*
+.vscode/*.json
 *.app
 *.alcache
-*.gitignore
-*app.json
