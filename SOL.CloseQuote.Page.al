@@ -20,26 +20,32 @@ page 50120 "Close Quote"
                 field("Won/Lost Date"; Rec."Won/Lost Date")
                 {
                     ToolTip = 'Caption';
+                    Caption = 'Won/Lost Date';
                 }
                 field("Won/Lost Quote Status"; Rec."Won/Lost Quote Status")
                 {
                     ToolTip = 'Caption';
+                    Caption = 'Won/Lost Quote Status';
                 }
                 field("Won/Lost Reason Code"; Rec."Won/Lost Reason Code")
                 {
                     ToolTip = 'Caption';
+                    Caption = 'Won/Lost Reason Code';
                 }
                 field("Won/Lost Reason Desc"; Rec."Won/Lost Reason Desc")
                 {
                     ToolTip = 'Caption';
+                    Caption = 'Won/Lost Reason Desc';
                 }
                 field("Won/Lost Remarks"; Rec."Won/Lost Remarks")
                 {
                     ToolTip = 'Caption';
+                    Caption = 'Won/Lost Remarks';
                 }
                 field("No."; Rec."No.")
                 {
                     ToolTip = 'Specifies the number of the involved entry or record, according to the specified number series.';
+                    Caption = 'Won/Lost Date';
                 }
             }
         }
@@ -58,16 +64,16 @@ page 50120 "Close Quote"
 
     local procedure FinishWizard()
     var
-        Error001: label 'Won/Lost status must be set either to Won or Lost!';
-        Error002: label 'Won/Lost Reason Code must be set!';
+        Error001Err: label 'Won/Lost status must be set either to Won or Lost!';
+        Error002Err: label 'Won/Lost Reason Code must be set!';
 
     begin
 
         if Rec."Won/Lost Quote Status" = Rec."Won/Lost Quote Status"::"In Progress" then
-            Error(Error001);
+            Error(Error001Err);
 
         if Rec."Won/Lost Reason Code" = '' then
-            Error(Error002);
+            Error(Error002Err);
 
     end;
 }

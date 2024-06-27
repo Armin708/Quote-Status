@@ -1,4 +1,4 @@
-tableextension 50120 "Sales Header Extension" extends "Sales Header"
+tableextension 50125 "Sales Header Ext" extends "Sales Header"
 {
     fields
     {

@@ -1,4 +1,4 @@
-tableextension 50121 "Sales Header Archive Extension" extends "Sales Header Archive"
+tableextension 50121 "Sales Header Archive Ext" extends "Sales Header Archive"
 {
     fields
     {

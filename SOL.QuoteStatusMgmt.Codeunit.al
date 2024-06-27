@@ -19,7 +19,7 @@ codeunit 50120 "Quote Status Mgmt"
 
     local procedure CheckIfWonLost(SalesQuote: Record "Sales Header")
     var
-        CloseQuotePage: Page "Close Quote"
+        CloseQuotePage: Page "Close Quote";
     begin
 
         if NOT (SalesQuote."Won/Lost Quote Status" in [SalesQuote."Won/Lost Quote Status"::Won, SalesQuote."Won/Lost Quote Status"::Lost]) then begin
