@@ -1,4 +1,4 @@
-pageextension 50122 "Sales Quotes Ext" extends "Sales Quotes"
+pageextension 50122 "SOL Sales Quotes Ext" extends "Sales Quotes"
 {
     layout
     {
@@ -60,8 +60,8 @@ pageextension 50122 "Sales Quotes Ext" extends "Sales Quotes"
 
                 trigger OnAction()
                 var
-                    QuoteStatusMgmt: Codeunit "Quote Status Mgmt";
-                    CloseQuotePage: Page "Close Quote";
+                    QuoteStatusMgmt: Codeunit "SOL Quote Status Mgmt";
+                    CloseQuotePage: Page "SOL Close Quote";
                 begin
                     clear(CloseQuotePage);
                     CloseQuotePage.SetTableView(Rec);

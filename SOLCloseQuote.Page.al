@@ -1,4 +1,4 @@
-page 50120 "Close Quote"
+page 50120 "SOL Close Quote"
 {
     ApplicationArea = All;
     Caption = 'Close Quote';

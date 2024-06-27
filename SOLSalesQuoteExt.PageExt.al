@@ -1,4 +1,4 @@
-pageextension 50120 "Sales Quote Ext" extends "Sales Quote"
+pageextension 50120 "SOL Sales Quote Ext" extends "Sales Quote"
 {
     layout
     {
@@ -61,8 +61,8 @@ pageextension 50120 "Sales Quote Ext" extends "Sales Quote"
 
                 trigger OnAction()
                 var
-                    QuoteStatusMgmt: Codeunit "Quote Status Mgmt";    
-                    CloseQuotePage: Page "Close Quote";
+                    QuoteStatusMgmt: Codeunit "SOL Quote Status Mgmt";    
+                    CloseQuotePage: Page "SOL Close Quote";
                 begin
                     clear(CloseQuotePage);
                     If CloseQuotePage.RunModal() = Action::OK then

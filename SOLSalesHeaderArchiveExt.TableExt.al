@@ -1,8 +1,8 @@
-tableextension 50125 "Sales Header Ext" extends "Sales Header"
+tableextension 50121 "SOL Sales Header Archive Ext" extends "Sales Header Archive"
 {
     fields
     {
-        field(50120; "Won/Lost Quote Status"; Enum "Won/Lost Quote Status")
+        field(50120; "Won/Lost Quote Status"; Enum "SOL Won/Lost Quote Status")
         {
             Caption = 'Won/Lost Quote Status';
             DataClassification = ToBeClassified;
@@ -25,10 +25,6 @@ tableextension 50125 "Sales Header Ext" extends "Sales Header"
             TableRelation = if ("Won/Lost Reason Code" = const('Won')) "Close Opportunity Code" where(Type = const("Won"))
             else if ("Won/Lost Reason Code" = const('Lost')) "Close Opportunity Code" where(Type = const("Lost"));
             ValidateTableRelation = true;
-            trigger OnValidate()
-            begin
-                CalcFields("Won/Lost Reason Desc");
-            end;
         }
         field(50123; "Won/Lost Reason Desc"; Text[100])
         {

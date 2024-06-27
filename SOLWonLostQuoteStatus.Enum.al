@@ -1,4 +1,4 @@
-enum 50120 "Won/Lost Quote Status"
+enum 50120 "SOL Won/Lost Quote Status"
 {
     Extensible = true;
 
